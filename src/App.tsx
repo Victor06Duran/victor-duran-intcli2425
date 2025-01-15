@@ -1,5 +1,4 @@
 import './App.css'
-import PotionFilters from './components/PotionFilters'
 import PotionList from './components/PotionList'
 
 function App() {
@@ -8,7 +7,6 @@ function App() {
     <>
       <div>
         <PotionList />
-        <PotionFilters />
       </div>
     </>
   )
