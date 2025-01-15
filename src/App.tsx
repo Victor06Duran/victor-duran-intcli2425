@@ -1,4 +1,5 @@
 import './App.css'
+import './fonts/kaotika.ttf'
 import PotionList from './components/PotionList'
 
 function App() {
