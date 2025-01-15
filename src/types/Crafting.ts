@@ -1,7 +1,7 @@
-import { CraftingTime } from "./CraftingTime";
+import { Duration } from "./Duration";
 
 export interface Crafting {
     station: string;
     required_level: number;
-    time: CraftingTime;
+    time: Duration;
   }
