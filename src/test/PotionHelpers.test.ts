@@ -335,7 +335,7 @@ describe("Potion Helpers Test", () => {
     });
   });
 
-  describe("calculateCraftingTime: calculates total crafting time for a list of potions", () => {
+  describe("calculateCraftingTime: calculates total crafting time in minutes for a list of potions", () => {
     it("Should show the time required to craft a list of potions", () => {
       const result = calculateCraftingTime(mockPotions);
       expect(result).toBe(150); 
