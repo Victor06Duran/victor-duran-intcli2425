@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calculateCraftingTime, filterByLevelRequirement, findPotionByEffect, getPotionsByRarity } from "../helpers/PotionHelpers";
 import { potions } from "../data/data";
 import { Potion } from "../types/Potion";
@@ -13,13 +13,22 @@ const PotionFilters: React.FC = () => {
   const [craftTime, setCraftTime] = useState<number | null>(null);
   const [selectedPotion, setSelectedPotion] = useState<Potion | null>(null);
 
-  const applyFilters = () => {
+  useEffect(() => {
     let result = potions;
     if (level > 0) result = filterByLevelRequirement(result, level);
     if (rarity) result = getPotionsByRarity(result, rarity);
     if (effect) result = findPotionByEffect(result, effect);
     setFilteredPotions(result);
-    setCraftTime(null)
+    setCraftTime(null);
+  }, [level, rarity, effect]);
+
+  const resetLowerFilters = (filter: string) => {
+    if (filter === "level") {
+      setRarity("");
+      setEffect("");
+    } else if (filter === "rarity") {
+      setEffect("");
+    }
   };
 
   const calculateTime = () => {
@@ -51,6 +60,7 @@ const PotionFilters: React.FC = () => {
             <button
               className="mt-4 bg-gray-950 text-white py-2 px-4 text-xl rounded hover:bg-yellow-600"
               onClick={() => setSelectedPotion(potion)}
+              
             >
               View Details
             </button>
@@ -139,7 +149,7 @@ const PotionFilters: React.FC = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 font-kaotika text-2xl bg-black border border-yellow-800 rounded-lg shadow">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-6 font-kaotika text-2xl bg-black border border-yellow-800 rounded-lg shadow">
 
         <div>
           <label htmlFor="levelFilter" className="block font-medium text-gray-100">
@@ -151,7 +161,10 @@ const PotionFilters: React.FC = () => {
             min="0"
             max="100"
             value={level}
-            onChange={(e) => setLevel(Number(e.target.value))}
+            onChange={(e) => {
+              setLevel(Number(e.target.value));
+              resetLowerFilters("level");
+            }}
             className="w-[90%] mt-2"
           />
           <p className="ext-medievalGold ">Selected Level: {level}</p>
@@ -163,7 +176,10 @@ const PotionFilters: React.FC = () => {
           <select
             id="rarityFilter"
             value={rarity}
-            onChange={(e) => setRarity(e.target.value)}
+            onChange={(e) => {
+              setRarity(e.target.value);
+              resetLowerFilters("rarity");
+            }}
             className="w-[50%] mt-2 p-2 border rounded text-medievalGold"
           >
             <option value="">All</option>
@@ -199,12 +215,6 @@ const PotionFilters: React.FC = () => {
           )}
         </div>
 
-        <button
-          className="bg-medievalGold text-white py-2 px-4 rounded hover:bg-gray-800 m-4"
-          onClick={applyFilters}
-        >
-          Apply Filters
-        </button>
 
       </div>
     </div>
