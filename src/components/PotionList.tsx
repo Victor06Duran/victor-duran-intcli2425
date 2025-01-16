@@ -179,7 +179,6 @@ const PotionFilters: React.FC = () => {
             value={level}
             onChange={(e) => {
               setLevel(Number(e.target.value));
-              resetLowerFilters("level");
             }}
             className="w-[90%] mt-2"
           />
@@ -194,7 +193,6 @@ const PotionFilters: React.FC = () => {
             value={rarity}
             onChange={(e) => {
               setRarity(e.target.value);
-              resetLowerFilters("rarity");
             }}
             className="w-[50%] mt-2 p-2 border rounded text-medievalGold"
           >
