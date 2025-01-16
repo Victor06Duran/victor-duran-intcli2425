@@ -22,14 +22,6 @@ const PotionFilters: React.FC = () => {
     setCraftTime(null);
   }, [level, rarity, effect]);
 
-  const resetLowerFilters = (filter: string) => {
-    if (filter === "level") {
-      setRarity("");
-      setEffect("");
-    } else if (filter === "rarity") {
-      setEffect("");
-    }
-  };
 
   const calculateTime = () => {
     setCraftTime(calculateCraftingTime(filteredPotions));
