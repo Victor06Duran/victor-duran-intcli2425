@@ -36,18 +36,19 @@ const PotionFilters: React.FC = () => {
   };
 
   return (
-    <div className="p-1">
-
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-1 m-2 ">
-        {filteredPotions.map((potion) => (
+  <div className="p-4 ">
+    <div
+      className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border-medievalGold rounded-lg bg-black min-h-[500px] min-w-[1200px] bg-opacity-30 h-[650px] overflow-y-auto">
+      {filteredPotions.length > 0 ? (
+        filteredPotions.map((potion) => (
           <div
             key={potion.id}
-            className="bg-black text-white font-kaotika text-2xl p-4 rounded shadow-md flex flex-col items-center bg-opacity-50"
+            className="bg-black min-w-[230px] text-white font-kaotika text-2xl p-4 rounded shadow-md flex flex-col items-center bg-opacity-50"
           >
             <img
               src={potion.image}
               alt={potion.name}
-              className="w-[70%] h-[70%] object-cover rounded-sm"
+              className="w-[90%] h-[60%] object-cover rounded-lg"
             />
             <h3 className="text-2xl text-yellow-600 ">{potion.name}</h3>
             <p className="text-xl text-white">Rarity: {potion.rarity}</p>
@@ -60,27 +61,36 @@ const PotionFilters: React.FC = () => {
             <button
               className="mt-4 bg-gray-950 text-white py-2 px-4 text-xl rounded hover:bg-yellow-600"
               onClick={() => setSelectedPotion(potion)}
-              
             >
               View Details
             </button>
-          </div>
-        ))}
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-7xl font-kaotika text-medievalSepia col-span-full">No potions match your criteria.</p>
+        )}
 
-        {selectedPotion && (
-          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center font-kaotika text-2xl">
-            <div className="bg-black p-6 w-full max-w-3xl border border-yellow-600 rounded-lg shadow bg-opacity-80">
-              <button
-                className="text-yellow-800 font-bold text-4xl z-1 hover:bg-gray-950"
+      {selectedPotion && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center font-kaotika text-2xl">
+          <div className="bg-black p-6 w-full max-w-3xl border border-yellow-600 rounded-lg shadow bg-opacity-80">
+            <div className="font-kaotika  flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+              <h2 className="text-4xl font-bold mb-4 text-medievalGold">
+                {selectedPotion.name}
+              </h2>
+              <button type="button" className="font-kaotika text-yellow-800 font-bold text-4xl z-1 hover:bg-gray-950 rounded-lg w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal"
                 onClick={() => setSelectedPotion(null)}
-
               >
-                X
-              </button>
-              <h2 className="text-4xl font-bold mb-4 text-yellow-500">{selectedPotion.name}</h2>
-              <p className="text-purple-700 mb-2">RARITY: {selectedPotion.rarity}</p>
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
 
-              <div className="">
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+            <h3 className="text-gray-200 mb-2">RARITY</h3>
+            <p className="text-purple-700 mb-2">{selectedPotion.rarity}</p>
+
+            <div className="">
               <h3 className="font-semibold">PRIMARY EFFECTS:</h3>
               <p className="text-gray-200">
                 {selectedPotion.effects.primary.attribute}:{" "}
@@ -90,7 +100,7 @@ const PotionFilters: React.FC = () => {
               </p>
 
               <h3 className="font-semibold mt-4">SECONDARY EFFECTS:</h3>
-              <ul className="list-disc ml-6 text-gray-300">
+              <ul className="list-disc  text-gray-300">
                 {selectedPotion.effects.secondary.map((effect, index) => (
                   <p key={index}>
                     {effect.attribute}: {effect.value} ({effect.duration.amount}{" "}
@@ -98,11 +108,11 @@ const PotionFilters: React.FC = () => {
                   </p>
                 ))}
               </ul>
-              </div>
-              
+            </div>
 
-              <h3 className="font-semibold mt-4">INGREDIENTS:</h3>
-              <ul className="list-disc ml-6 text-gray-200">
+
+              <h3 className="font-semibold mt-4">INGREDIENTS</h3>
+              <ul className="list-disc  text-gray-200">
                 {selectedPotion.ingredients.map((ingredient, index) => (
                   <p key={index}>
                     {ingredient.name} - {ingredient.origin.location} (
@@ -110,46 +120,52 @@ const PotionFilters: React.FC = () => {
                   </p>
                 ))}
               </ul>
-              <h3 className="font-semibold mt-4">LEVEL REQUIRED:</h3>
+              <h3 className="font-semibold mt-4">LEVEL REQUIRED</h3>
 
               <p className="text-2xl text-purple-100 mt-4">
                 {selectedPotion.usage.restrictions.levelRequirement}
               </p>
-              <h3 className="font-semibold mt-4">CLASS REQUIREMENT:</h3>
-
-              <p className="text-2xl text-purple-100 mt-4" >
-                {selectedPotion.usage.restrictions.classRestrictions} 
-              </p>
-
-              <ul className="list-disc ml-6 text-gray-300">
-                {selectedPotion.usage.restrictions.classRestrictions.map((index) => (
+              <h3 className="font-semibold mt-4">CLASS REQUIREMENT</h3>
+              <ul className="list-disc  text-gray-200">
+                {selectedPotion.usage.restrictions.classRestrictions.map((classRestrictions, index) => (
                   <p key={index}>
+                    {classRestrictions}
                   </p>
                 ))}
               </ul>
 
-              <h3 className="font-semibold mt-4">INSTRUCTIONS:</h3>
+              <h3 className="font-semibold mt-4">INSTRUCTIONS</h3>
+
+              <ul className="list-disc  text-gray-200">
+                {selectedPotion.usage.instructions.map((instructions, index) => (
+                  <p key={index}>
+                    {instructions}
+                  </p>
+                ))}
+              </ul>
+
+              <h3 className="font-semibold mt-4">WARNING</h3>
+
+              <ul className="list-disc text-gray-200">
+                {selectedPotion.usage.restrictions.warnings.map((warnings, index) => (
+                  <p key={index}>
+                    {warnings}
+                  </p>
+                ))}
+              </ul>
+
+              <h3 className="font-semibold mt-4">CRAFTING TIME</h3>
 
               <p className="text-2xl text-purple-100 mt-4" >
-                {selectedPotion.usage.instructions} 
-              </p>
-              <h3 className="font-semibold mt-4">WARNING:</h3>
-
-              <p className="text-2xl text-purple-100 mt-4" >
-                {selectedPotion.usage.restrictions.warnings} 
-              </p>
-
-              <h3 className="font-semibold mt-4">CRAFTING TIME:</h3>
-
-              <p className="text-2xl text-purple-100 mt-4" >
-                {selectedPotion.crafting.time.amount} {selectedPotion.crafting.time.unit} 
+                {selectedPotion.crafting.time.amount} {selectedPotion.crafting.time.unit}
               </p>
             </div>
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-6 font-kaotika text-2xl bg-black border border-yellow-800 rounded-lg shadow">
+
+      <div className="m-3 container mx-auto min-w-[1200px] grid grid-cols-1 md:grid-cols-3 gap-2 mb-6 font-kaotika text-2xl bg-black border border-yellow-800 rounded-lg shadow">
 
         <div>
           <label htmlFor="levelFilter" className="block font-medium text-gray-100">
@@ -167,7 +183,7 @@ const PotionFilters: React.FC = () => {
             }}
             className="w-[90%] mt-2"
           />
-          <p className="ext-medievalGold ">Selected Level: {level}</p>
+          <p className="text-medievalGold ">Selected Level: {level}</p>
         </div>
         <div>
           <label htmlFor="rarityFilter" className="block font-medium text-gray-100">
