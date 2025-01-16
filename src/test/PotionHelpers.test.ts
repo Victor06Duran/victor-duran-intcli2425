@@ -282,6 +282,96 @@ const mockPotions: Potion[] = [
   },
 ];
 
+const mockPotionWithHours: Potion[] = [
+  {
+    id: "potion_007",
+    name: "Elixir of Shadows",
+    type: "consumable",
+    rarity: "legendary",
+    effects: {
+      primary: {
+        attribute: "invisibility",
+        value: 100,
+        duration: {
+          unit: "seconds",
+          amount: 60,
+        },
+      },
+      secondary: [
+        {
+          attribute: "stealth",
+          value: 50,
+          duration: {
+            unit: "minutes",
+            amount: 10,
+          },
+        },
+      ],
+    },
+    ingredients: [
+      {
+        name: "Nightshade Petals",
+        quantity: 2,
+        origin: {
+          location: "Shadow Glen",
+          region: "Obsidian Vale",
+        },
+      },
+      {
+        name: "Ethereal Dust",
+        quantity: 1,
+        origin: {
+          location: "Cavern of Whispers",
+          region: "Phantom Reaches",
+        },
+      },
+      {
+        name: "Void Essence",
+        quantity: 1,
+        origin: {
+          location: "Abyssal Rift",
+          region: "Dark Abyss",
+        },
+      },
+    ],
+    crafting: {
+      station: "Shadowforge Altar",
+      required_level: 25,
+      time: {
+        unit: "hours",
+        amount: 1,
+      },
+    },
+    usage: {
+      instructions: [
+        "Consume to become one with the shadows.",
+        "Avoid direct sunlight during the effect.",
+      ],
+      restrictions: {
+        levelRequirement: 20,
+        classRestrictions: ["Rogue", "Assassin", "Necromancer"],
+        warnings: [
+          "May cause dizziness after expiration.",
+          "Repeated use can attract unwanted attention from the Shadow Council.",
+        ],
+      },
+    },
+    meta: {
+      created_by: "Alchemist Eryndor",
+      lore: "A potion forged in the darkest corners of the realm, granting unparalleled stealth to those daring enough to consume it.",
+      availability: {
+        in_shops: false,
+        quest_reward: true,
+        drop_rate: {
+          boss: "Phantom Warden",
+          chance: "5%",
+        },
+      },
+    },
+    image: "image_7.webp",
+  },
+]
+
 describe("Potion Helpers Test", () => {
   describe("filterByLevelRequirement: filters potions by their level requirement", () => {
     it("Should show potions that have the same or lower level as the user", () => {
@@ -343,6 +433,13 @@ describe("Potion Helpers Test", () => {
     it("Should know if the sum of the time required to craft the list of potions is incorrect", () => {
       const result = calculateCraftingTime(mockPotions);
       expect(result).not.toBe(105); 
+    });
+    it("Should transform hours into minutes", () => {
+      const result = calculateCraftingTime(mockPotionWithHours);
+      //The mocked potion has a craft time of 1 hour
+      expect(mockPotionWithHours[0].crafting.time.amount).toBe(1);
+      expect(mockPotionWithHours[0].crafting.time.unit).toEqual("hours");
+      expect(result).toBe(60); 
     });
   });
 
