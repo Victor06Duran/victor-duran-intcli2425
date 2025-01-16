@@ -59,7 +59,7 @@ const PotionFilters: React.FC = () => {
               ({potion.meta.availability.drop_rate.chance})
             </p>
             <button
-              className="mt-4 bg-gray-950 text-white py-2 px-4 text-xl rounded hover:bg-yellow-600"
+              className="mt-4 bg-gray-900 text-white py-2 px-4 text-xl rounded hover:bg-yellow-600"
               onClick={() => setSelectedPotion(potion)}
             >
               View Details
@@ -71,8 +71,8 @@ const PotionFilters: React.FC = () => {
         )}
 
       {selectedPotion && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center font-kaotika text-2xl">
-          <div className="bg-black p-6 w-full max-w-3xl border border-yellow-600 rounded-lg shadow bg-opacity-80">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center font-kaotika text-xl">
+          <div className=" bg-black p-6 w-full max-w-3xl border border-yellow-600 rounded-lg shadow bg-opacity-80">
             <div className="font-kaotika  flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <h2 className="text-4xl font-bold mb-4 text-medievalGold">
                 {selectedPotion.name}
@@ -87,20 +87,20 @@ const PotionFilters: React.FC = () => {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <h3 className="text-gray-200 mb-2">RARITY</h3>
-            <p className="text-purple-700 mb-2">{selectedPotion.rarity}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h3 className="text-medievalSepia text-left ">RARITY</h3>
+            <p className="text-gray-200 text-right">{selectedPotion.rarity}</p>
 
-            <div className="">
-              <h3 className="font-semibold">PRIMARY EFFECTS:</h3>
-              <p className="text-gray-200">
+              <h3 className="text-medievalSepia text-left ">PRIMARY EFFECTS:</h3>
+              <p className="text-gray-200 text-right">
                 {selectedPotion.effects.primary.attribute}:{" "}
                 {selectedPotion.effects.primary.value} (
                 {selectedPotion.effects.primary.duration.amount}{" "}
                 {selectedPotion.effects.primary.duration.unit})
               </p>
 
-              <h3 className="font-semibold mt-4">SECONDARY EFFECTS:</h3>
-              <ul className="list-disc  text-gray-300">
+              <h3 className="text-medievalSepia text-left mt-2">SECONDARY EFFECTS:</h3>
+              <ul className="list-disc text-gray-300 text-right">
                 {selectedPotion.effects.secondary.map((effect, index) => (
                   <p key={index}>
                     {effect.attribute}: {effect.value} ({effect.duration.amount}{" "}
@@ -108,11 +108,10 @@ const PotionFilters: React.FC = () => {
                   </p>
                 ))}
               </ul>
-            </div>
 
 
-              <h3 className="font-semibold mt-4">INGREDIENTS</h3>
-              <ul className="list-disc  text-gray-200">
+              <h3 className="text-medievalSepia mt-2 text-left ">INGREDIENTS</h3>
+              <ul className="list-disc  text-gray-200 text-right">
                 {selectedPotion.ingredients.map((ingredient, index) => (
                   <p key={index}>
                     {ingredient.name} - {ingredient.origin.location} (
@@ -120,13 +119,13 @@ const PotionFilters: React.FC = () => {
                   </p>
                 ))}
               </ul>
-              <h3 className="font-semibold mt-4">LEVEL REQUIRED</h3>
+              <h3 className="text-medievalSepia  mt-2 text-left ">LEVEL REQUIRED</h3>
 
-              <p className="text-2xl text-purple-100 mt-4">
+              <p className=" text-purple-100 mt-2 text-right ">
                 {selectedPotion.usage.restrictions.levelRequirement}
               </p>
-              <h3 className="font-semibold mt-4">CLASS REQUIREMENT</h3>
-              <ul className="list-disc  text-gray-200">
+              <h3 className="text-medievalSepia  mt-2 text-left ">CLASS REQUIREMENT</h3>
+              <ul className="list-disc  text-gray-200 text-right">
                 {selectedPotion.usage.restrictions.classRestrictions.map((classRestrictions, index) => (
                   <p key={index}>
                     {classRestrictions}
@@ -134,9 +133,9 @@ const PotionFilters: React.FC = () => {
                 ))}
               </ul>
 
-              <h3 className="font-semibold mt-4">INSTRUCTIONS</h3>
+              <h3 className="text-medievalSepia  mt-2 text-left ">INSTRUCTIONS</h3>
 
-              <ul className="list-disc  text-gray-200">
+              <ul className="list-disc  text-gray-200 text-right">
                 {selectedPotion.usage.instructions.map((instructions, index) => (
                   <p key={index}>
                     {instructions}
@@ -144,9 +143,9 @@ const PotionFilters: React.FC = () => {
                 ))}
               </ul>
 
-              <h3 className="font-semibold mt-4">WARNING</h3>
+              <h3 className="text-medievalSepia mt-2 text-left ">WARNING</h3>
 
-              <ul className="list-disc text-gray-200">
+              <ul className="list-disc text-gray-200 text-right">
                 {selectedPotion.usage.restrictions.warnings.map((warnings, index) => (
                   <p key={index}>
                     {warnings}
@@ -154,11 +153,12 @@ const PotionFilters: React.FC = () => {
                 ))}
               </ul>
 
-              <h3 className="font-semibold mt-4">CRAFTING TIME</h3>
+              <h3 className="text-medievalSepia  mt-2 text-left ">CRAFTING TIME</h3>
 
-              <p className="text-2xl text-purple-100 mt-4" >
+              <p className=" text-purple-100 mt-2 text-right" >
                 {selectedPotion.crafting.time.amount} {selectedPotion.crafting.time.unit}
               </p>
+            </div>
             </div>
           </div>
         )}
